@@ -1,0 +1,4 @@
+comparator,profit_difference_mean,ci_low,ci_high,method
+Random expected same budget,0.0,0.0,0.0,paired arm-stratified bootstrap; fixed learned policies; individual 95% CI
+Response prediction same budget,0.0,0.0,0.0,paired arm-stratified bootstrap; fixed learned policies; individual 95% CI
+All send,0.0,0.0,0.0,paired arm-stratified bootstrap; fixed learned policies; individual 95% CI

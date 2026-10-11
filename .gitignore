@@ -1,0 +1,25 @@
+# 环境、原始数据与缓存
+.venv/
+.cache/
+__pycache__/
+.pytest_cache/
+*.pyc
+.ipynb_checkpoints/
+data/raw/*
+!data/raw/.gitkeep
+
+# 全部计算结果统一存储；只发布精选聚合结果
+reports/tables/*
+!reports/tables/.gitkeep
+!reports/tables/ab_results.csv
+!reports/tables/ate_adjusted.csv
+!reports/tables/uplift_metrics.csv
+!reports/tables/locked_policy_test.csv
+!reports/tables/policy_contrasts.csv
+reports/logs/*
+!reports/logs/.gitkeep
+reports/delivery-manifest.json
+*.log
+
+# 本地更新留下的旧版备份
+data/backups/
