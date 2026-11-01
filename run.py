@@ -2,6 +2,7 @@
 import argparse
 import json
 import os
+import sys
 
 os.environ.setdefault("OMP_NUM_THREADS", "2")
 os.environ.setdefault("OPENBLAS_NUM_THREADS", "2")
@@ -11,6 +12,8 @@ from pathlib import Path
 _plot_cache = Path(__file__).resolve().parent / ".cache" / "matplotlib"
 _plot_cache.mkdir(parents=True, exist_ok=True)
 os.environ.setdefault("MPLCONFIGDIR", str(_plot_cache))
+
+sys.path.insert(0, str(Path(__file__).resolve().parent / "2 python"))
 
 from src.data import download, audit
 from src.statistics import balance, ab_analysis, power_analysis

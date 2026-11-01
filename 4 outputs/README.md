@@ -16,7 +16,7 @@
 | 场景变化 | [08 成本与价值敏感性](figures/08-sensitivity.png) |
 | 标准评价 | [09 标准 Qini 曲线](figures/09-qini-standard.png) |
 
-图 05 的总体增量人数和图 09 的处理组尺度 Qini gain 单位不同，定义见 docs/01-analysis-plan.md。
+图 05 的总体增量人数和图 09 的处理组尺度 Qini gain 单位不同，定义见 3 docs/01-analysis-plan.md。
 
 ## 02 关键结果表
 

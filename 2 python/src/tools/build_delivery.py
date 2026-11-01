@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 import zipfile
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 EXCLUDED_DIRECTORIES = {".venv", ".git", "__pycache__", ".pytest_cache", "work", ".cache", ".ipynb_checkpoints", "backups"}
 ZIP_PATH = ROOT.parent / "email-campaign-causal-analysis-complete.zip"
 
@@ -29,7 +29,7 @@ def main():
             for path in files
         ],
     }
-    manifest_path = ROOT / "reports/delivery-manifest.json"
+    manifest_path = ROOT / "4 outputs/delivery-manifest.json"
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     files.append(manifest_path)
     with zipfile.ZipFile(ZIP_PATH, "w", compression=zipfile.ZIP_DEFLATED) as archive:

@@ -31,7 +31,7 @@ all 完成取数、审计、实验检验、ATE、模型、模拟、图表及 REA
 | 04 | causal | ITT、ATE、协变量调整与组间效应差 | ate_adjusted.csv、heterogeneity_tests.csv |
 | 05 | models | 预测概率和增量概率区别、S/T/X、独立评价 | uplift_metrics.csv、uplift_deciles.csv |
 | 06 | models | 验证集选择预算、测试集估计收益 | locked_policy_test.csv、policy_contrasts.csv |
-| 07 | report | 用结果解释业务及局限性 | README、reports/figures、docs/project-summary.md |
+| 07 | report | 用结果解释业务及局限性 | README、4 outputs/figures、3 docs/project-summary.md |
 
 例子：
 
@@ -43,7 +43,7 @@ all 完成取数、审计、实验检验、ATE、模型、模拟、图表及 REA
 .\.venv\Scripts\python.exe run.py --stage report
 ```
 
-report 读取既有结果，需要先完成前面的分析阶段。只改文档/图表时无须重新下载或训练。notebooks/ 的 01–05 是同一源码的教学入口，避免维护第二套分析逻辑；使用本项目虚拟环境的 kernel。
+report 读取既有结果，需要先完成前面的分析阶段。只改文档/图表时无须重新下载或训练。2 python/notebooks/ 的 01–05 是同一源码的教学入口，避免维护第二套分析逻辑；使用本项目虚拟环境的 kernel。
 
 ## 四、如何理解结果
 
@@ -82,10 +82,10 @@ git push -u origin main
 
 发布分支使用 main。原始数据由下载脚本获取，完整计算结果可以重新运行生成；公开仓库只保留精选聚合表，避免提交逐行客户预测、环境与本地备份。
 
-教学 Notebook 还可以用 python src/tools/run_notebooks.py 逐单元执行，结果保存到 Notebook。这个入口不启动 Jupyter kernel，便于在禁止本地内核通信的环境验证代码；本次使用该方式执行了所有代码单元。
+教学 Notebook 还可以用 python "2 python/src/tools/run_notebooks.py" 逐单元执行，结果保存到 Notebook。这个入口不启动 Jupyter kernel，便于在禁止本地内核通信的环境验证代码；本次使用该方式执行了所有代码单元。
 
-已有 ZIP 数据的规范导入方式：python src/tools/import_local_data.py <压缩包路径>。该脚本只读取原始 CSV，核对 SHA-256，不读取或解压其他项目的代码。
+已有 ZIP 数据的规范导入方式：python "2 python/src/tools/import_local_data.py" <压缩包路径>。该脚本只读取原始 CSV，核对 SHA-256，不读取或解压其他项目的代码。
 
 本次 scikit-uplift 0.5.1 对 scikit-learn 的 stable_cumsum 调用会产生弃用警告，分析实际运行通过。requirements.txt 限制 scikit-learn <1.10，并锁定本次运行版本；未修改第三方库源文件。
 
-测试临时文件保存在 tests/.cache，Git 和交付打包均忽略该目录，避免依赖系统临时目录的写入权限。
+测试临时文件保存在 .cache/pytest，Git 和交付打包均忽略该目录，避免依赖系统临时目录的写入权限。

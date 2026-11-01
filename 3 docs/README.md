@@ -11,4 +11,4 @@
 | 快速回顾业务、方法、结果和局限性 | [项目总结](project-summary.md) |
 | 选择适合放入简历的四条表述 | [简历描述](resume-bullets.md) |
 
-完整数值、结果图和业务模拟放在 [分析报告](../reports/analysis.md)，源码在 src，学习入口在 notebooks。
+完整数值、结果图和业务模拟放在 [分析报告](../4%20outputs/analysis.md)，源码在 src，学习入口在 notebooks。

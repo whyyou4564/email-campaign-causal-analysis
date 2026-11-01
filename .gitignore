@@ -5,21 +5,27 @@ __pycache__/
 .pytest_cache/
 *.pyc
 .ipynb_checkpoints/
-data/raw/*
-!data/raw/.gitkeep
+1 data/raw/*
+!1 data/raw/.gitkeep
 
 # 全部计算结果统一存储；只发布精选聚合结果
-reports/tables/*
-!reports/tables/.gitkeep
-!reports/tables/ab_results.csv
-!reports/tables/ate_adjusted.csv
-!reports/tables/uplift_metrics.csv
-!reports/tables/locked_policy_test.csv
-!reports/tables/policy_contrasts.csv
-reports/logs/*
-!reports/logs/.gitkeep
-reports/delivery-manifest.json
+4 outputs/tables/*
+!4 outputs/tables/.gitkeep
+!4 outputs/tables/ab_results.csv
+!4 outputs/tables/ate_adjusted.csv
+!4 outputs/tables/uplift_metrics.csv
+!4 outputs/tables/locked_policy_test.csv
+!4 outputs/tables/policy_contrasts.csv
+4 outputs/logs/*
+!4 outputs/logs/.gitkeep
+4 outputs/delivery-manifest.json
 *.log
 
 # 本地更新留下的旧版备份
-data/backups/
+1 data/backups/
+
+# 公开可复查的聚合预算、敏感性和样本量结果
+!4 outputs/tables/budget_locked_policies.csv
+!4 outputs/tables/budget_policy_contrasts.csv
+!4 outputs/tables/sensitivity_analysis.csv
+!4 outputs/tables/power_sample_size.csv

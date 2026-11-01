@@ -19,4 +19,4 @@
 
 相同特征与相同结果不必然是重复客户。删除这些行会改变实验组样本量和结果，因此原始数据全部保留。IQR 方法标出的高历史消费值只作为审计信号，不能自动认定为错误。
 
-数据来源：[Hillstrom 原始挑战说明](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)、[scikit-uplift 官方数据说明](https://www.uplift-modeling.com/en/latest/api/datasets/fetch_hillstrom.html)。本次原始 CSV 来自用户已有压缩包，仅提取数据文件；来源说明和实际获取方式见 reports/tables/data_provenance.json。
+数据来源：[Hillstrom 原始挑战说明](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)、[scikit-uplift 官方数据说明](https://www.uplift-modeling.com/en/latest/api/datasets/fetch_hillstrom.html)。本次原始 CSV 来自用户已有压缩包，仅提取数据文件；来源说明和实际获取方式见 4 outputs/tables/data_provenance.json。

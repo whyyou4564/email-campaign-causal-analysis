@@ -2,14 +2,13 @@
 from pathlib import Path
 import nbformat
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 BOOTSTRAP = '''
 from pathlib import Path
 import sys
-root = Path.cwd()
-if not (root / "src").exists():
-    root = root.parent
-sys.path.insert(0, str(root))
+root = next(p for p in [Path.cwd(), *Path.cwd().parents]
+            if (p / "2 python/src").is_dir())
+sys.path.insert(0, str(root / "2 python"))
 import pandas as pd
 from src.data import download
 from src.config import OUT
@@ -28,12 +27,12 @@ def notebook(name, title, introduction, cells):
     document = nbformat.v4.new_notebook(cells=content)
     document.metadata["kernelspec"] = {"display_name": "Python 3 (project .venv)", "language": "python", "name": "python3"}
     document.metadata["language_info"] = {"name": "python", "version": "3.13"}
-    target = ROOT / "notebooks" / name
+    target = ROOT / "2 python/notebooks" / name
     target.parent.mkdir(parents=True, exist_ok=True)
     nbformat.write(document, target)
 
 notebook("01-data-audit.ipynb", "01 数据检查与分析单位",
-         "先确定每行代表什么、哪些变量发生在实验前，再开展检验。详见 docs/02-data-dictionary.md。", [
+         "先确定每行代表什么、哪些变量发生在实验前，再开展检验。详见 3 docs/02-data-dictionary.md。", [
     ("markdown", "## 一、字段与数据类型\n只允许实验前变量用于模型。visit 是实验后的结果，不能拿来预测 conversion 的因果增益。"),
     ("code", "from src.data import audit\nfindings = audit(df)\nprint(findings)\nprint(df.dtypes.to_string())"),
     ("markdown", "## 二、缺失与重复\n没有客户 ID，完全相同的特征和结果不能证明是同一个客户。保留记录，避免改变随机分配组的样本量。"),
@@ -51,7 +50,7 @@ notebook("02-experiment-validation.ipynb", "02 实验分组与随机化检查",
     ("code", "from src.modeling import split_data\ntrain, validation_ids, test = split_data(df)\nprint('样本量：', len(train), len(validation_ids), len(test))\nprint('训练与测试交集：', len(set(train) & set(test)))"),
 ])
 notebook("03-ab-test-analysis.ipynb", "03 A/B 检验、区间与业务解释",
-         "主要指标 conversion；辅助指标 visit、含零值的人均 spend。详细假设在 docs/01-analysis-plan.md。", [
+         "主要指标 conversion；辅助指标 visit、含零值的人均 spend。详细假设在 3 docs/01-analysis-plan.md。", [
     ("markdown", "## 一、绝对与相对提升\n概率差乘以 100 得到百分点；概率差除以对照率得到相对提升。这两个数不能混淆。"),
     ("code", "from src.statistics import rate_difference, ab_analysis, power_analysis\nif not (OUT / 'ab_results.csv').exists():\n    ab_analysis(df)\nresults = pd.read_csv(OUT / 'ab_results.csv')\nprint(results[['treatment','control','metric','effect','relative_lift','ci_low','ci_high','p_holm']].to_string(index=False))"),
     ("markdown", "## 二、直接复算购买率差\n二元结果使用两比例 z 检验和 Newcombe 区间。spend 使用 Welch，允许组间方差不同，并用 bootstrap 补充检查均值差区间。"),
@@ -70,7 +69,7 @@ notebook("04-causal-effect-analysis.ipynb", "04 平均因果效应与异质性",
 ])
 notebook("05-uplift-modeling.ipynb", "05 增益模型与预算模拟",
          "预测谁会买与预测谁因邮件而增量购买不同。模型参数固定，所有策略选择只在验证集进行。", [
-    ("markdown", "## 一、S/T/X-Learner\nS 使用一个含处理变量的响应模型；T 分别拟合两组；X 通过交叉拟合响应模型生成伪效应。复用 src/modeling.py，避免第二套分析逻辑。"),
+    ("markdown", "## 一、S/T/X-Learner\nS 使用一个含处理变量的响应模型；T 分别拟合两组；X 通过交叉拟合响应模型生成伪效应。复用 2 python/src/modeling.py，避免第二套分析逻辑。"),
     ("code", "from src.modeling import run_models\nfrom src.budget import budget_analysis\nif not (OUT / 'uplift_metrics.csv').exists():\n    run_models(df)\nif not (OUT / 'budget_locked_policies.csv').exists():\n    budget_analysis()\nmetrics = pd.read_csv(OUT / 'uplift_metrics.csv')\nprint(metrics[(metrics.outcome == 'conversion') & (metrics.split == 'test')].to_string(index=False))"),
     ("markdown", "## 二、为什么不用准确率或 ROC AUC 作为增益标准\n它们评价响应预测，不评价干预的增量。Qini、AUUC、Uplift@K 和分位数组检查因果增益排序。"),
     ("code", "print(pd.read_csv(OUT / 'prediction_metrics.csv').to_string(index=False))\nprint(pd.read_csv(OUT / 'uplift_deciles.csv').query(\"outcome == 'conversion' and model == 'S-Learner'\").to_string(index=False))"),
@@ -78,6 +77,6 @@ notebook("05-uplift-modeling.ipynb", "05 增益模型与预算模拟",
     ("code", "import json\nprint(json.loads((OUT / 'policy_lock.json').read_text()))\nprint(pd.read_csv(OUT / 'locked_policy_test.csv').to_string(index=False))"),
     ("markdown", "## 四、预算上限、收益差和敏感性\n假设贡献利润和邮件成本不是实际测得的数据。收益差区间跨零时不能证明模型优于随机投放。"),
     ("code", "print(pd.read_csv(OUT / 'budget_locked_policies.csv').to_string(index=False))\nprint(pd.read_csv(OUT / 'budget_policy_contrasts.csv').to_string(index=False))\nprint(pd.read_csv(OUT / 'sensitivity_analysis.csv').to_string(index=False))"),
-    ("markdown", "## 五、推荐阅读顺序\n查看 reports/analysis.md 中的 Qini、分位数组、预算图和局限性，再阅读 docs/04-interview-guide.md。图表是 src/reporting.py 从结果表生成的，不手工填数字。"),
+    ("markdown", "## 五、推荐阅读顺序\n查看 4 outputs/analysis.md 中的 Qini、分位数组、预算图和局限性，再阅读 3 docs/04-interview-guide.md。图表是 2 python/src/reporting.py 从结果表生成的，不手工填数字。"),
 ])
 print("Five teaching notebooks generated.")

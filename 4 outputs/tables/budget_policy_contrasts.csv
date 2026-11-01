@@ -1,0 +1,7 @@
+budget_cap,selected_fraction,model,comparator,profit_difference_per_10000,ci_low,ci_high,interpretation
+0.1,0.1,S-Learner,Random expected,115.42000961448639,-303.1514995638687,534.0224796266584,exploratory budget scenario; fixed policy; individual 95% CI
+0.1,0.1,S-Learner,Response prediction,-70.54617686746666,-527.8383107351311,352.75417710844255,exploratory budget scenario; fixed policy; individual 95% CI
+0.3,0.3,S-Learner,Random expected,-39.50124171770216,-553.0382650895449,456.04603245228583,exploratory budget scenario; fixed policy; individual 95% CI
+0.3,0.3,S-Learner,Response prediction,-175.8047666161903,-703.6395731291183,352.03354411894094,exploratory budget scenario; fixed policy; individual 95% CI
+0.5,0.5,S-Learner,Random expected,-53.18997042683815,-528.1869808443274,403.95849033050405,exploratory budget scenario; fixed policy; individual 95% CI
+0.5,0.5,S-Learner,Response prediction,-140.53167818245697,-703.0788975766418,387.166463664555,exploratory budget scenario; fixed policy; individual 95% CI

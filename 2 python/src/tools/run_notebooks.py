@@ -8,16 +8,16 @@ from pathlib import Path
 
 import nbformat
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[3]
 os.chdir(ROOT)
-sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "2 python"))
 os.environ.setdefault("OMP_NUM_THREADS", "2")
 os.environ.setdefault("OPENBLAS_NUM_THREADS", "2")
 os.environ.setdefault("MPLCONFIGDIR", str(ROOT / ".cache" / "matplotlib"))
 
 def main():
     rows = []
-    for path in sorted((ROOT / "notebooks").glob("*.ipynb")):
+    for path in sorted((ROOT / "2 python/notebooks").glob("*.ipynb")):
         notebook = nbformat.read(path, as_version=4)
         namespace = {"__name__": "__notebook__", "__file__": str(path)}
         execution_count = 0
@@ -37,7 +37,7 @@ def main():
         nbformat.write(notebook, path)
         rows.append({"notebook": path.name, "code_cells_executed": execution_count, "status": "passed"})
         print(f"PASS {path.name}: {execution_count} code cells")
-    (ROOT / "reports/tables/notebook_validation.json").write_text(
+    (ROOT / "4 outputs/tables/notebook_validation.json").write_text(
         json.dumps(rows, indent=2), encoding="utf-8"
     )
 

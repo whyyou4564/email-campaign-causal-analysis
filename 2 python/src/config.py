@@ -1,10 +1,10 @@
 """统一项目路径、实验分组及固定参数。"""
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-RAW = ROOT / "data" / "raw"
-OUT = ROOT / "reports" / "tables"
-FIG = ROOT / "reports" / "figures"
+ROOT = Path(__file__).resolve().parents[2]
+RAW = ROOT / "1 data" / "raw"
+OUT = ROOT / "4 outputs" / "tables"
+FIG = ROOT / "4 outputs" / "figures"
 SEED = 20261011
 ARMS = ["No E-Mail", "Mens E-Mail", "Womens E-Mail"]
 

@@ -21,7 +21,7 @@ Email Campaign A/B Testing and Uplift Modeling
 
 共 **64,000 客户、12 字段、578 次购买**；无缺失或结果字段逻辑异常。结果观察窗口是实验后两周。6,562 行完全相同，但没有客户 ID，不能认定为重复客户；保留原始实验样本。消费金额的 99.10% 为零，均值分析仍包含全部客户。
 
-来源为 [Hillstrom 原始挑战](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)，下载脚本使用 [scikit-uplift 官方数据接口所列镜像](https://www.uplift-modeling.com/en/latest/_modules/sklift/datasets/datasets.html)。本次因运行环境限制，数据取自用户已有压缩包中的原始 CSV；只提取数据，未复制其他项目代码。实际取得方式和校验值记录于 reports/tables/data_provenance.json。没有声称本次成功联网校验镜像压缩文件。
+来源为 [Hillstrom 原始挑战](https://blog.minethatdata.com/2008/03/minethatdata-e-mail-analytics-and-data.html)，下载脚本使用 [scikit-uplift 官方数据接口所列镜像](https://www.uplift-modeling.com/en/latest/_modules/sklift/datasets/datasets.html)。本次因运行环境限制，数据取自用户已有压缩包中的原始 CSV；只提取数据，未复制其他项目代码。实际取得方式和校验值记录于 4 outputs/tables/data_provenance.json。没有声称本次成功联网校验镜像压缩文件。
 
 ## 分析口径
 
@@ -32,7 +32,7 @@ Email Campaign A/B Testing and Uplift Modeling
 - 1:1:1 为计划分配假设，SRM p=0.904；最大绝对 SMD=0.017。分配日志缺失，检查通过不能证明来源实验一定没有设计问题。
 - 仅使用 7 个实验前特征；训练/验证/测试=38,400/12,800/12,800。模型与覆盖比例只按验证集选择。
 
-详细方法、假设和指标单位见 [分析方案](../docs/01-analysis-plan.md)、[字段说明](../docs/02-data-dictionary.md)。
+详细方法、假设和指标单位见 [分析方案](../3%20docs/01-analysis-plan.md)、[字段说明](../3%20docs/02-data-dictionary.md)。
 
 ## 核心结果：平均效应
 
@@ -56,7 +56,7 @@ Email Campaign A/B Testing and Uplift Modeling
 
 ![平均处理效应](figures/03-ate.png)
 
-Lin 完全交互回归的调整效应与均值差接近，见 reports/tables/ate_adjusted.csv。购买率的分群交互检验经 BH 修正后没有达到 5% 水平；不能仅凭分群点估计不同就声称发现了稳定异质性。
+Lin 完全交互回归的调整效应与均值差接近，见 4 outputs/tables/ate_adjusted.csv。购买率的分群交互检验经 BH 修正后没有达到 5% 水平；不能仅凭分群点估计不同就声称发现了稳定异质性。
 
 ![实验前平衡](figures/02-balance.png)
 
@@ -120,16 +120,16 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements-lock.txt
 .\.venv\Scripts\python.exe run.py --stage all
 .\.venv\Scripts\python.exe -m pytest -q
-.\.venv\Scripts\python.exe src/tools/run_notebooks.py
+.\.venv\Scripts\python.exe "2 python/src/tools/run_notebooks.py"
 ```
 
-不需要激活环境或更改系统执行策略。跨系统环境可使用 requirements.txt；本次实际依赖全量锁定在 requirements-lock.txt。详情见 [逐步执行指南](../docs/03-execution-guide.md)。
+不需要激活环境或更改系统执行策略。跨系统环境可使用 requirements.txt；本次实际依赖全量锁定在 requirements-lock.txt。详情见 [逐步执行指南](../3%20docs/03-execution-guide.md)。
 
 ## 项目成果
 
 独立源码与随机实验审计、A/B/ATE 结果、探索性分群分析、响应预测基线、S/T/X-Learner、Qini/AUUC/Uplift@K 与分位数组、验证集锁定策略、三种硬预算场景、12 种成本价值场景、9 张图和编号教学 Notebook。方法测试覆盖不等组分配下的增量估计、分母定义、特征防泄漏、样本不重叠、排序方向及真实数据契约。
 
-[项目总结](../docs/project-summary.md) · [面试讲解](../docs/04-interview-guide.md) · [中文简历四条](../docs/resume-bullets.md)
+[项目总结](../3%20docs/project-summary.md) · [面试讲解](../3%20docs/04-interview-guide.md) · [中文简历四条](../3%20docs/resume-bullets.md)
 
 ## 局限性
 
